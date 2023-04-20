@@ -1,139 +1,112 @@
-import os
 import sys
-sys.path.insert(0,'/Users/owner/Downloads/mlproject/src')
+from dataclasses import dataclass
 
-from data_ingestion import *
-from exception import CustomException
-from logger import logging
+import numpy as np 
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from dataclasses import dataclass,  field
-import numpy as np
-
-# Modelling
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor,AdaBoostRegressor
-from sklearn.svm import SVR
-from sklearn.linear_model import LinearRegression, Ridge,Lasso
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-from sklearn.model_selection import RandomizedSearchCV
-from catboost import CatBoostRegressor
-from xgboost import XGBRegressor
-import warnings
-from typing import Dict
-
-
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder,StandardScaler
 
-def evaluate_model(true, predicted):
-    mae = mean_absolute_error(true, predicted)
-    mse = mean_squared_error(true, predicted)
-    rmse = np.sqrt(mean_squared_error(true, predicted))
-    r2_square = r2_score(true, predicted)
-    return mae, rmse, r2_square
+from src.exception import CustomException
+from src.logger import logging
 
+import os
+
+from src.utils import save_object
+
+#input: pickle file where we would dump the serialized object 
 @dataclass
 class DataTransformationConfig:
-    
-    train_data_path: str=os.path.join('artifacts',"train.csv")
-    test_data_path: str=os.path.join('artifacts',"test.csv")
-    raw_data_path: str=os.path.join('artifacts',"data.csv")
-    
-    models: Dict[str, int] = field(default_factory=lambda: {
-    "Linear Regression": LinearRegression(),
-    "Lasso": Lasso(),
-    "Ridge": Ridge(),
-    "K-Neighbors Regressor": KNeighborsRegressor(),
-    "Decision Tree": DecisionTreeRegressor(),
-    "Random Forest Regressor": RandomForestRegressor(),
-    "XGBRegressor": XGBRegressor(), 
-    "CatBoosting Regressor": CatBoostRegressor(verbose=False),
-    "AdaBoost Regressor": AdaBoostRegressor()
-})
+    preprocessor_obj_file_path=os.path.join('artifacts',"proprocessor.pkl")
     
 
 class DataTransformation:
     def __init__(self):
-        self.transformation_config=DataTransformationConfig()
-        df = pd.read_csv(self.transformation_config.train_data_path)
-        logging.info("completed reading the dataset!")
-        
-        self.X = df.drop(columns=['math score'],axis=1)
-        self.y = df['math score']
-        
-        
-        
-    
+        self.data_transformation_config=DataTransformationConfig()
 
-        
-    def initiate_data_transformation(self):
+    def get_data_transformer_object(self):
         try:
-            logging.info("Entered the data transformation method or component")
-            df = pd.read_csv(self.transformation_config.train_data_path)
-            logging.info("completed reading the dataset!")
-            
-            
-            
-            num_features = self.X.select_dtypes(exclude="object").columns
-            cat_features = self.X.select_dtypes(include="object").columns
-            
-            numeric_transformer = StandardScaler()
-            oh_transformer = OneHotEncoder()
-            
-            preprocessor = ColumnTransformer(
-                [
-                    ("OneHotEncoder", oh_transformer, cat_features),
-                    ("StandardScaler", numeric_transformer, num_features),        
+            numerical_columns = ["writing score", "reading score"]
+            categorical_columns = [
+                "gender",
+                "race ethnicity",
+                "parental level of education",
+                "lunch",
+                "test preparation course",
+            ]
+            num_pipeline= Pipeline(
+                steps=[
+                ("imputer",SimpleImputer(strategy="median")),
+                ("scaler",StandardScaler())
+
                 ]
             )
-            logging.info("completed applying the transformers")
-            self.X = preprocessor.fit_transform(self.X)
-        
-            X_train, X_test, y_train, y_test = train_test_split(self.X,self.y,test_size=0.2,random_state=42)
-            logging.info("training and testing datasets are ready!")
+            cat_pipeline=Pipeline(
+                steps=[
+                ("imputer",SimpleImputer(strategy="most_frequent")),
+                ("one_hot_encoder",OneHotEncoder()),
+                ("scaler",StandardScaler(with_mean=False))
+                ]
+
+            )
+            logging.info(f"Categorical columns: {categorical_columns}")
+            logging.info(f"Numerical columns: {numerical_columns}")
             
-            model_list = []
-            r2_list =[]
+            preprocessor=ColumnTransformer(
+                [
+                ("num_pipeline",num_pipeline,numerical_columns),
+                ("cat_pipelines",cat_pipeline,categorical_columns)
+                ]
 
-            for i in range(len(list(self.transformation_config.models))):
-                model = list(self.transformation_config.models.values())[i]
-                model.fit(X_train, y_train) # Train model
+            )
+            return preprocessor
+        except Exception as e:
+            raise CustomException(e,sys)                   
 
-                # Make predictions
-                y_train_pred = model.predict(X_train)
-                y_test_pred = model.predict(X_test)
-                
-                # Evaluate Train and Test dataset
-                model_train_mae , model_train_rmse, model_train_r2 = evaluate_model(y_train, y_train_pred)
+        
+    def initiate_data_transformation(self,train_path,test_path):
+        try:
+            train_df=pd.read_csv(train_path)
+            test_df=pd.read_csv(test_path)
+            logging.info("Read the training and testing datasets") 
+            preprocessing_obj=self.get_data_transformer_object()
+            
+            target_column_name="math score"
+            numerical_columns = ['writing score','reading score']
+            
+            input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
+            target_feature_train_df=train_df[target_column_name]
+                 
+            
+            input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
+            target_feature_test_df=test_df[target_column_name]
+            
+            logging.info("Applying preprocessing object on training dataframe and testing dataframe.")  
+             
+            input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df) 
+            
+            train_arr = np.c_[
+                input_feature_train_arr, np.array(target_feature_train_df)
+            ]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
-                model_test_mae , model_test_rmse, model_test_r2 = evaluate_model(y_test, y_test_pred)
+            logging.info(f"Saved preprocessing object.")
 
-                
-                print(list(self.transformation_config.models.keys())[i])
-                model_list.append(list(self.transformation_config.models.keys())[i])
-                
-                print('Model performance for Training set')
-                print("- Root Mean Squared Error: {:.4f}".format(model_train_rmse))
-                print("- Mean Absolute Error: {:.4f}".format(model_train_mae))
-                print("- R2 Score: {:.4f}".format(model_train_r2))
+            save_object(
 
-                print('----------------------------------')
-                
-                print('Model performance for Test set')
-                print("- Root Mean Squared Error: {:.4f}".format(model_test_rmse))
-                print("- Mean Absolute Error: {:.4f}".format(model_test_mae))
-                print("- R2 Score: {:.4f}".format(model_test_r2))
-                r2_list.append(model_test_r2)
-                
-                print('='*35)
-                print('\n')
+                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessing_obj
+
+            )
+
+            return (
+                train_arr,
+                test_arr,
+                self.data_transformation_config.preprocessor_obj_file_path,
+            )  
+        
         except Exception as e:
             raise CustomException(e,sys)
         
-        
-if __name__=="__main__":
-    obj= DataTransformation()
-    obj.initiate_data_transformation()
