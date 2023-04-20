@@ -30,7 +30,7 @@ class DataTransformation:
             numerical_columns = ["writing score", "reading score"]
             categorical_columns = [
                 "gender",
-                "race ethnicity",
+                "race/ethnicity",
                 "parental level of education",
                 "lunch",
                 "test preparation course",
