@@ -1,6 +1,5 @@
 import os
 import sys
-
 from src.components.data_transformation import DataTransformation
 from src.exception import CustomException
 from src.logger import logging
@@ -22,7 +21,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            df=pd.read_csv('/home/asmaa/students-performance/Students-Performance-Prediction/artifacts/data.csv')
+            df=pd.read_csv('/home/asmaa/students-performance/Students-Performance-Prediction/artifacts/data.csv',header=0, delim_whitespace=True)
             logging.info('Read the dataset as df')
             
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
