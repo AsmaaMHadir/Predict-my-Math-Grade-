@@ -1,1 +1,15 @@
-<h1>Welcome to the home page</h1>
+<!-- templates/home.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_index.css') }}">
+</head>
+<body>
+    <h1>I am a Machine Learning Model, and I will help you predict your Maths score!</h1>
+    <!-- Add the anchor tag with the link to index.html -->
+    <div><iframe src="https://giphy.com/embed/zPbnEgxsPJOJSD3qfr"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+    <a href="{{ url_for('predict_datapoint') }}" class="btn btn-primary">Predict My Score</a>
+</body>
+</html>

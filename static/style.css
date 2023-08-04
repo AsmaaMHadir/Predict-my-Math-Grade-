@@ -1,0 +1,77 @@
+/* style.css */
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container styles */
+.login {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-top: 20px;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column; /* Align the input elements in a single column */
+    align-items: center; /* Center the input elements horizontally */
+    justify-content: center; /* Center the input elements vertically */
+}
+
+.form-label {
+    width: 100%;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    max-width: 400px; /* Limit the width of the input elements */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+/* Placeholder styles */
+.placeholder {
+    color: #999;
+}

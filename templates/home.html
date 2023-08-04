@@ -1,7 +1,10 @@
 <html>
+    <head>
+        <title>Student Exam Performance Prediction</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
 <body>
     <div class="login">
-       <h1>Student Exam Performance Indicator</h1>
    
        <form action="{{ url_for('predict_datapoint')}}" method="post">
         <h1>
@@ -105,7 +108,7 @@
         </div>
     </form>
     <h2>
-       THE  prediction is {{results}}
+       You are predicted to score {{results}}
     </h2>
    <body>
 </html>
