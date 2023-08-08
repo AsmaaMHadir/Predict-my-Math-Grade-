@@ -55,4 +55,4 @@ This project could be used a guide in creating a standard end-to-end ML web appl
 
 ## 6. What's next/in progress?
 
-- In progress: Deployment with AmazonECR and Docker images.
+- In progress: Deployment with AmazonECS and Docker images.
