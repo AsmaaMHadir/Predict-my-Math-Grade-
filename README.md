@@ -4,7 +4,8 @@
  2. Dataset Trained on
  3. Model
  4. How to use this project? 
- 5. Contributing
+ 5. Contributions
+ 6. What's next/in progress?
 
 
 ## 1. Application
@@ -14,7 +15,8 @@ Snippet of the web interface:
 <img width="632" alt="webs" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/ac2b70d0-2984-4a58-9377-3edd57a662a5">
 <img width="536" alt="pred" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/f68fef5e-7c60-42e2-8ae6-a072a13362e9">
 
-- The API was built with Flask framework. 
+- The API was built with Flask framework.
+- Deployed with Vercel.
 
 
 ## 2. Dataset Trained on
@@ -50,3 +52,7 @@ This project could be used a guide in creating a standard end-to-end ML web appl
 ## 5. Contributing
 
 - Writing tests for the API could be a good exercise for you and an enhacement of the project!
+
+## 6. What's next/in progress?
+
+- In progress: Deployment with AmazonECR and Docker images.
