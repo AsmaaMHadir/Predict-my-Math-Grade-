@@ -13,7 +13,8 @@ Snippet of the web interface:
 
 <img width="632" alt="webs" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/ac2b70d0-2984-4a58-9377-3edd57a662a5">
 <img width="536" alt="pred" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/f68fef5e-7c60-42e2-8ae6-a072a13362e9">
-- Stack: the Model's API was built with **Flask**. 
+
+-  Stack: the Model's API was built with **Flask**. 
 
 ## 2. Dataset Trained on
 
