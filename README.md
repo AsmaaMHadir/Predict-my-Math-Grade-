@@ -1,7 +1,7 @@
 # Outline
-1- Application
-2- Dataset Trained on
-4- Model 
+1 - Application
+2 - Dataset Trained on
+3 - Model 
 
 ## 1) Application
 Machine learning based web app that predicts the Math exam score for a student based on their input feature values. You may access the web app here.
@@ -24,7 +24,7 @@ The dataset `stud.csv` contains 1001 rows and 8 columns representing students re
 - Reading score: numeric value of the student's grade in reading
 - Writing score: numeric value of the student's grade in writing
 
-## 4) Model
+## 3) Model
 
 - The model trainer runs the following set of algorithms from the `sklearn` library on the preprocessed features to observe which performs the best:
     - Random forest
