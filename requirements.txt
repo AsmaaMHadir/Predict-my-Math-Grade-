@@ -3,9 +3,10 @@ numpy
 Flask
 seaborn
 matplotlib 
-scikit-learn
+scikit-learn 
 catboost
 xgboost
 dill
 gunicorn
 -e .
+
