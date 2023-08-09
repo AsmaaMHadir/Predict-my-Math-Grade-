@@ -16,7 +16,16 @@ Snippet of the web interface:
 <img width="536" alt="pred" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/f68fef5e-7c60-42e2-8ae6-a072a13362e9">
 
 - The API was built with Flask framework.
-- Deployed with Vercel.
+- Deployed with Render.
+
+You may clone this repository and run the following commands on your terminal to ensure successful access to the app on your local host:
+```bash
+pip install -r requirements.txt
+```
+Then:
+```bash
+python3 app.py
+```
 
 
 ## 2. Dataset Trained on
