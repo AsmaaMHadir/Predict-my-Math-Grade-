@@ -1,6 +1,6 @@
 # Outline
 
- 1. Application
+ 1. Application 
  2. Dataset Trained on
  3. Model
  4. How to use this project? 
