@@ -6,7 +6,6 @@ matplotlib
 scikit-learn
 catboost
 xgboost
-pickle-mixin
 dill
 gunicorn
 -e .
