@@ -2,22 +2,30 @@ import sys
 import pandas as pd
 from src.exception import CustomException
 from src.utils import load_object
+import os
 
 class PredictPipeline:
 
     def __init__(self):
         pass
 
-    def predict(self,features):
+    def predict(self , features):
         try:
-            model_path='/home/asmaa/students-performance/Students-Performance-Prediction/artifacts/model.pkl'
-            preprocessor_path = '/home/asmaa/students-performance/Students-Performance-Prediction/artifacts/proprocessor.pkl'
+            
+
+            model_relative_path = "model.pkl"
+            preprocessor_relative_path = "proprocessor.pkl"
+                
+                
+            model_path = os.path.join('artifacts', model_relative_path)
+            preprocessor_path = os.path.join('artifacts', preprocessor_relative_path)
+
             model=load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
 
             data_scaled = preprocessor.transform(features)
-
             preds=model.predict(data_scaled)
+                
         except Exception as e:
             raise CustomException(e,sys)
 
