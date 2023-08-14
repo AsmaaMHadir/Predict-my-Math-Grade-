@@ -9,7 +9,14 @@ class PredictPipeline:
     def __init__(self):
         pass
 
-    def predict(self , features):
+    '''
+    Function to return the model's prediction
+    input:
+        - features: input features given by the users and fed to the model
+    output:
+        - preds: model's resulting predictions
+    '''
+    def predict(self, features):
         try:
             
 
@@ -23,7 +30,10 @@ class PredictPipeline:
             model=load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
 
+            # transform the user's input features
             data_scaled = preprocessor.transform(features)
+            
+            # return the model's predictions
             preds=model.predict(data_scaled)
                 
         except Exception as e:
@@ -48,7 +58,8 @@ class CustomData:
         self.reading_score = reading_score
         self.writing_score = writing_score
         self.test_preparation_course = test_preparation_course
-    # return input as data frame for the model
+        
+    # return input as dataframe object for the model to process
     def get_data_As_dataframe(self):
         try:
             custom_data_input_dict = {

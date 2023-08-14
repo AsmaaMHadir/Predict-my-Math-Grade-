@@ -103,13 +103,17 @@ class ModelTrainer:
                 raise CustomException("No best model found")
             logging.info("Selected best model on both training and testing datasets")
 
-            preprocessing_obj = save_object(
+            save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
 
+            # returned model prediction
             predicted=best_model.predict(x_test)
+            # returned model performance
             r2_square = r2_score(y_test,predicted)
+            
             return r2_square, best_model_name
+        
         except Exception as e:
             raise CustomException(e,sys)
