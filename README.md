@@ -12,9 +12,6 @@
 Machine learning based web app that predicts the Math exam score for a student based on their input feature values. You may access the web app here (https://math-grade-predictor.onrender.com/).
 Snippet of the web interface:
 
-<img width="632" alt="webs" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/ac2b70d0-2984-4a58-9377-3edd57a662a5">
-<img width="536" alt="pred" src="https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/f68fef5e-7c60-42e2-8ae6-a072a13362e9">
-
 ![Recording 2023-08-14 at 21 53 03](https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/a94b6228-6877-4f13-ac0c-a91f12ec3b68)
 
 - The API was built with Flask framework.
