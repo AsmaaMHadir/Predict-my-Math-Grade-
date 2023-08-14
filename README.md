@@ -26,7 +26,9 @@ Then:
 ```bash
 python3 app.py
 ```
-
+## Illustration Digram
+The following Lucid chart illustrates how the web app works on the high level:
+![Illustration diagram](https://github.com/AsmaaMHadir/Students-Performance-Prediction/assets/46932156/31c2f31a-ff38-41d8-bdad-8037e386d7e8)
 
 ## 2. Dataset Trained on
 
