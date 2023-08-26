@@ -4,8 +4,7 @@
  2. Dataset Trained on
  3. Model
  4. How to use this project? 
- 5. Contributions
- 6. What's next/in progress?
+ 5. What's next?
 
 
 ## 1. Application
@@ -59,10 +58,7 @@ Then pickles the best model which in this case is acheived by the `Ridge` linear
 
 This project could be used a guide in creating a standard end-to-end ML web application with your choice of the API framework; You may fork this repository and add your own custom features or even retrain the models on your own dataset as long as you perform the necessary exploratory data analysis, feature engineering and selection, and data pre-processing. Please feel free to also open issues if you have encountered a bug or have a suggestion on how to improve the application or any parts of the pipeline.
 
-## 5. Contributing
 
-- Writing tests for the API could be a good exercise for you and an enhacement of the project!
-
-## 6. What's next/in progress?
+## 5. What's next/in progress?
 
 - In progress: Deployment with AmazonECS and Docker images.
